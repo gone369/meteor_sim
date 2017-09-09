@@ -23,9 +23,10 @@ export default function setup(state){
   //Rockets
   state.sprites.rockets = [];
   state.texture.rockets = [];
+  const spriteSheet = PIXI.loader.resources[Rockets].texture;
   for(let i = 0; i < 10; i++) {
-    const tempTexture = PIXI.utils.TextureCache[Rockets];
-    tempTexture.frame = new PIXI.Rectangle(i*100,0,100,250);
+    const tempTexture = new PIXI.Texture(spriteSheet, new PIXI.Rectangle(i*100,0,100,250));
+    // tempTexture.frame = new PIXI.Rectangle(i*100,0,100,250);
     state.texture.rockets.push(tempTexture);
   }
 }

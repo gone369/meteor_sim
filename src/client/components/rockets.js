@@ -1,43 +1,57 @@
 import * as PIXI from "pixi.js";
+import Rockets from "../assets/MeteorSim/rocket.png";
+import gameConfig from "../game.config.js";
 
-function addRocketSprite(state){
+export function addRocketSprite(state){
   console.log("add RocketSprite");
 
   state.gameState.numRockets++;
-  console.log(state.texture.rockets[0]);
-  const sprite = new PIXI.Sprite(state.texture.rockets[0]);
+  const rocket = new PIXI.extras.AnimatedSprite(state.texture.rockets);
 
-  // state.sprite.y = 0;
-  // state.sprite.x = Math.round(Math.random()*state.canvas.width);
 
-  const rocket = {
-    velocity: Math.random()*10+1,
-    frame: 0,
-    sprite: state.sprite
-  };
+  rocket.x = Math.random()*state.canvas.width+gameConfig.rocket.width/2;
+  rocket.y = state.canvas.height+gameConfig.rocket.height;
+  console.log(rocket.x,rocket.y);
+  rocket.animationSpeed = 0.3;
+  rocket.play();
 
   state.sprites.rockets.push(rocket);
-  state.stage.addChild(rocket.sprite);
+  state.stage.addChild(rocket);
 }
 
-function removeRocketSprite(rocketSprite){
+export function removeRocketSprite(rocketSprite){
 }
 
-function animateRocketFrame(sprites,texture){
+export function animateRocketFrame(sprites,texture){
   for(let sprite of sprites.rockets){
     sprite.frame = (sprite.frame+1)%10;
     sprite.sprite = new PIXI.Sprite(texture.rockets[sprite.frame]);
   }
 }
 
-function moveRockets(sprites){
-  for(let sprite of sprites.rockets){
-    sprite.sprite.y += sprite.velocity;
+export function moveRockets(rockets){
+  for(let rocket of rockets){
+    // rocket.x += Math.round(Math.random()) === 1? 2 : -2;
+    rocket.x += 0;
+    rocket.y -= 1;
   }
 }
 
+export default {
+  initialize(state){
+    state.rockets.addRocketTimerTick = 100;
+  },
+  run(state){
+    console.log(state.rockets.addRocketTimerTick);
+    if(--state.rockets.addRocketTimerTick < 0){
+      addRocketSprite(state)
+      state.rockets.addRocketTimerTick = 100;
+    }
+    moveRockets(state.sprites.rockets);
+  }
+}
 
 //animateRocketFrame(state.sprites,texture);
-if(state.gameState.numRockets < 1){
-  addRocketSprite(state);
-}
+// if(state.gameState.numRockets < 1){
+//   addRocketSprite(state);
+// }

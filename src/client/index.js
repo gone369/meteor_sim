@@ -13,7 +13,9 @@ import sound from "./components/sound.js"
 
 (function(){
   let state = {
+    rockets: {},
     sprites: {},
+    sound: {},
     texture: {},
     renderer: null,
     canvas: null,
@@ -33,7 +35,7 @@ import sound from "./components/sound.js"
     Rockets
   ]).on("progress",loadProgressHandler)
   .load(()=>{
-    sound();
+    sound(state);
     setup(state);
     run(state);
   });

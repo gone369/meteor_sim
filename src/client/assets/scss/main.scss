@@ -3,11 +3,27 @@
 @import "base";
 
 #root{
-  canvas#root-canvas{
+  position: relative;
+  height: 100%;
+  width: 100%;
+  #viewport{
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
+    #root-canvas{
+    }
+    #sound-state{
+      padding: 5px;
+      margin-right: 10px;
+      float: right;
+      color: white;
+      cursor: pointer;
+      font-weight: 300;
+      &:hover{
+        color: $primary;
+      }
+    }
   }
   min-width: 600px;
 }

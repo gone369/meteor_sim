@@ -1,4 +1,5 @@
 import * as PIXI from "pixi.js";
+import Rockets from "../components/rockets.js";
 
 export default function run(state){
   function gameLoop(){
@@ -47,13 +48,19 @@ export default function run(state){
       state.stage.addChild(state.sprites.backdrop);
       state.gameState.current = "runGame";
       state.gameState.previous = "startGame";
+
+      Rockets.initialize(state);
+
       gameLoop();
     }
     function runGame(){
 
       //sprite.y = canvas.height - 250;
-      
+
       state.sprites.backdrop.y -= 1;
+
+      Rockets.run(state);
+
 
       //end of run game
       state.renderer.render(state.stage);

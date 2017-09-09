@@ -2,6 +2,8 @@ import * as PIXI from "pixi.js";
 
 export default function initialize(state){
 
+  const $root = document.getElementById("root");
+
   state.renderer = PIXI.autoDetectRenderer(600, 750, {
     antialias: true,
     transparent: true,
@@ -17,6 +19,10 @@ export default function initialize(state){
     dropHeight: 0
   }
 
+  state.sound = {
+    muted: false
+  }
+
   state.canvas = {
     element: state.renderer.view,
     height: state.renderer.view.height,
@@ -26,7 +32,8 @@ export default function initialize(state){
   state.canvas.element.id = "root-canvas";
 
   //Add the canvas to the HTML document
-  document.getElementById("root").appendChild(state.canvas.element);
+  const $controls = document.getElementById("controls");
+  document.getElementById("viewport").insertBefore(state.canvas.element,$controls);
   //Create a container object called the `stage`
   state.stage = new PIXI.Container();
 }

@@ -2,6 +2,7 @@ const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const config = require("./config.js");
 const webpack = require('webpack');
+const LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
 
 module.exports = {
   entry: {
@@ -37,7 +38,8 @@ module.exports = {
             loader:"babel-loader",
             options:{
               cacheDirectory:true,
-              presets:"es2015"
+              presets:[["env", {"modules" : false, "targets" : { "node" : 4}}]],
+              "plugins": ["lodash"]
             }
           },
           {
@@ -142,8 +144,11 @@ module.exports = {
       template : config.client.html_index_template_path,
       //favicon: config.client.favicon,
       inject: 'body'
+    }),
+    new LodashModuleReplacementPlugin({
+      "collections" : true,
+      "paths": true,
+      "caching": true,
     })
   ]
 };
-
-
