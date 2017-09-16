@@ -3,6 +3,8 @@ import "./assets/scss/main.scss";
 import Menu from "./assets/MeteorSim/menu_s.png";
 import Backdrop from "./assets/MeteorSim/backdrop.png";
 import Rockets from "./assets/MeteorSim/rocket.png";
+import Meteor from "./assets/MeteorSim/meteor.png";
+import Cloud from "./assets/MeteorSim/cloud.png";
 import { PixiSpriteUtil } from "pixiUtils";
 
 import initialize from "./lifecycle/initialize.js";
@@ -14,6 +16,7 @@ import sound from "./components/sound.js"
 (function(){
   let state = {
     rockets: {},
+    meteor: {},
     sprites: {},
     sound: {},
     texture: {},
@@ -32,7 +35,9 @@ import sound from "./components/sound.js"
   PIXI.loader.add([
     Menu,
     Backdrop,
-    Rockets
+    Rockets,
+    Meteor,
+    Cloud
   ]).on("progress",loadProgressHandler)
   .load(()=>{
     sound(state);

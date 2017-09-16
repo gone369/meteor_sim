@@ -1,5 +1,6 @@
 import * as PIXI from "pixi.js";
 import Rockets from "../components/rockets.js";
+import Meteor from "../components/meteor.js";
 
 export default function run(state){
   function gameLoop(){
@@ -46,10 +47,12 @@ export default function run(state){
     function startGame(){
       document.addEventListener("keydown",gameKeyHandler);
       state.stage.addChild(state.sprites.backdrop);
+      state.stage.addChild(state.sprites.cloud);
       state.gameState.current = "runGame";
       state.gameState.previous = "startGame";
 
       Rockets.initialize(state);
+      Meteor.initialize(state);
 
       gameLoop();
     }

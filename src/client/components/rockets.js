@@ -8,10 +8,9 @@ export function addRocketSprite(state){
   state.gameState.numRockets++;
   const rocket = new PIXI.extras.AnimatedSprite(state.texture.rockets);
 
-
   rocket.x = Math.random()*state.canvas.width+gameConfig.rocket.width/2;
   rocket.y = state.canvas.height+gameConfig.rocket.height;
-  console.log(rocket.x,rocket.y);
+  rocket.scale.set(0.7);
   rocket.animationSpeed = 0.3;
   rocket.play();
 
@@ -42,7 +41,7 @@ export default {
     state.rockets.addRocketTimerTick = 100;
   },
   run(state){
-    console.log(state.rockets.addRocketTimerTick);
+    // console.log(state.rockets.addRocketTimerTick);
     if(--state.rockets.addRocketTimerTick < 0){
       addRocketSprite(state)
       state.rockets.addRocketTimerTick = 100;
