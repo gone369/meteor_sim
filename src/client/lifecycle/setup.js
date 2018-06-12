@@ -7,7 +7,7 @@ import Meteor from "../assets/MeteorSim/meteor.png";
 import gameConfig from "../game.config.js";
 
 export default function setup(state){
-  //menu background
+  
   state.sprites.menu = new PIXI.Sprite(
     PIXI.loader.resources[Menu].texture
   );

@@ -15,6 +15,8 @@ export default function run(state){
       case "runGame":
       runGame();
       break;
+      case "stopGame":
+      stopGame();
       case "end":
       break;
       default:
@@ -27,25 +29,43 @@ export default function run(state){
       }
     }
     function startMenu(){
-      document.addEventListener("keydown",menuKeyHandler);
+      window.addEventListener("keydown",menuKeyHandler);
     }
     function runMenu(){
       state.renderer.render(state.stage);
     }
     function stopMenu(){
       state.stage.removeChild(state.sprites.menu);
-      document.removeEventListener("keydown",menuKeyHandler);
+      window.removeEventListener("keydown",menuKeyHandler);
       state.gameState.current = "startGame";
       state.gameState.previous = "menu";
       gameLoop();
     }
+
+    const gameKeyMap = {};
     function gameKeyHandler(event){
-      console.log(event.key);
-      if(event.key === "a"){
+      console.log(event.key,event.type,this);
+      const deltaStep = 5;
+      gameKeyMap[event.key] = event.type === "down"
+
+      if(gameKeyMap["a"]){
+        Meteor.moveMeteor(state,-1*deltaStep,0);
+      }
+      if(gameKeyMap["w"]){
+        Meteor.moveMeteor(state,0,-1*deltaStep);
+      }
+      if(gameKeyMap["d"]){
+        Meteor.moveMeteor(state,deltaStep,0);
+      }
+      if(gameKeyMap["s"]){
+        Meteor.moveMeteor(state,0,deltaStep);
       }
     }
+
     function startGame(){
-      document.addEventListener("keydown",gameKeyHandler);
+      window.addEventListener("keydown",gameKeyHandler);
+      window.addEventListener("keyup",gameKeyHandler);
+      console.log("state",state);
       state.stage.addChild(state.sprites.backdrop);
       state.stage.addChild(state.sprites.cloud);
       state.gameState.current = "runGame";
@@ -64,12 +84,13 @@ export default function run(state){
 
       Rockets.run(state);
 
-
       //end of run game
       state.renderer.render(state.stage);
       requestAnimationFrame(gameLoop);
     }
     function stopGame(){
+      console.log("stopGame");
+      window.removeEventListener("keydown",gameKeyHandler);
     }
     function runEnd(){
     }

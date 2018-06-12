@@ -4,30 +4,18 @@ import Meteor from "../assets/MeteorSim/meteor.png";
 import gameConfig from "../game.config.js";
 
 export function addMeteorSprite(state){
-  console.log("add Meteor");
-
   const meteor = new PIXI.extras.AnimatedSprite(state.texture.meteor);
-
-
   meteor.x = state.canvas.width/2-gameConfig.meteor.width/2;
   meteor.y = 0;
   console.log(meteor.x,meteor.y);
   meteor.animationSpeed = 0.3;
   meteor.play();
 
-  state.sprites.meteor.push(meteor);
+  state.sprites.meteor = meteor;
   state.stage.addChild(meteor);
 }
 
-export function removeMeteorSprite(meteorSprite){
-}
-
-export function moveMeteors(meteors){
-  for(let meteor of meteors){
-    // meteor.x += Math.round(Math.random()) === 1? 2 : -2;
-    meteor.x += 0;
-    meteor.y -= 1;
-  }
+export function removeMeteorSprite(){
 }
 
 export default {
@@ -35,7 +23,25 @@ export default {
     state.meteor.addMeteorTimerTick = 100;
     addMeteorSprite(state);
   },
-  run(state){
+  moveMeteor(state,deltaX,deltaY){
+    const minX = state.sprites.meteor.width;
+    const maxX = state.canvas.width-state.sprites.meteor.width;
+    const minY = 0
+    const maxY = state.canvas.height-state.sprites.meteor.height-50;
+
+    const finalX = state.sprites.meteor.x + deltaX;
+    const finalY = state.sprites.meteor.y + deltaY;
+
+    if(finalX > minX && finalX < maxX){
+      state.sprites.meteor.x += deltaX;
+    }
+    if(finalY > minY && finalY < maxY){
+      state.sprites.meteor.y += deltaY;
+    }
+
+  },
+  destroy(state){
+    // removeMeteorSprite();
   }
 }
 

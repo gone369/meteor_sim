@@ -1,6 +1,7 @@
 import * as PIXI from "pixi.js";
 import Rockets from "../assets/MeteorSim/rocket.png";
 import gameConfig from "../game.config.js";
+import shortid from "shortid";
 
 export function addRocketSprite(state){
   console.log("add RocketSprite");
@@ -16,6 +17,7 @@ export function addRocketSprite(state){
 
   state.sprites.rockets.push(rocket);
   state.stage.addChild(rocket);
+  return shortid.generate();
 }
 
 export function removeRocketSprite(rocketSprite){
@@ -47,6 +49,8 @@ export default {
       state.rockets.addRocketTimerTick = 100;
     }
     moveRockets(state.sprites.rockets);
+  },
+  destroy(){
   }
 }
 
