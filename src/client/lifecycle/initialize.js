@@ -16,8 +16,14 @@ export default function initialize(state){
     previous: null,
     current: "menu",
     numRockets: 0,
-    dropHeight: 0
-  }
+    dropHeight: 0,
+    keymap: {
+      a: false,
+      s: false,
+      d: false,
+      f: false
+    }
+  };
 
   state.sound = {
     muted: false

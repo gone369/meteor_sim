@@ -1,6 +1,7 @@
 import * as PIXI from "pixi.js";
 import Rockets from "../components/rockets.js";
 import Meteor from "../components/meteor.js";
+import { forEach,map } from "utils";
 
 export default function run(state){
   function gameLoop(){
@@ -42,12 +43,12 @@ export default function run(state){
       gameLoop();
     }
 
-    const gameKeyMap = {};
     function gameKeyHandler(event){
-      console.log(event.key,event.type,this);
-      const deltaStep = 5;
-      gameKeyMap[event.key] = event.type === "down"
-
+      // console.log(event.key,event.type,this);
+      state.gameState.keymap[event.key] = event.type === "keydown";
+    }
+    function checkMove(gameKeyMap){
+      const deltaStep = 2;
       if(gameKeyMap["a"]){
         Meteor.moveMeteor(state,-1*deltaStep,0);
       }
@@ -65,7 +66,7 @@ export default function run(state){
     function startGame(){
       window.addEventListener("keydown",gameKeyHandler);
       window.addEventListener("keyup",gameKeyHandler);
-      console.log("state",state);
+
       state.stage.addChild(state.sprites.backdrop);
       state.stage.addChild(state.sprites.cloud);
       state.gameState.current = "runGame";
@@ -77,10 +78,10 @@ export default function run(state){
       gameLoop();
     }
     function runGame(){
-
       //sprite.y = canvas.height - 250;
 
       state.sprites.backdrop.y -= 1;
+      checkMove(state.gameState.keymap);
 
       Rockets.run(state);
 
@@ -91,6 +92,7 @@ export default function run(state){
     function stopGame(){
       console.log("stopGame");
       window.removeEventListener("keydown",gameKeyHandler);
+      window.removeEventListener("keyup",gameKeyHandler);
     }
     function runEnd(){
     }
