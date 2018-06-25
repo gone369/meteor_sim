@@ -4,17 +4,17 @@ import Rockets from "../assets/MeteorSim/rocket.png";
 import Backdrop from "../assets/MeteorSim/backdrop.png";
 import Cloud from "../assets/MeteorSim/cloud.png";
 import Meteor from "../assets/MeteorSim/meteor.png";
+import EndScreen from "../assets/MeteorSim/end.png";
 import gameConfig from "../game.config.js";
 
 export default function setup(state){
-  
+
   state.sprites.menu = new PIXI.Sprite(
     PIXI.loader.resources[Menu].texture
   );
   state.sprites.menu.pivot.set(state.sprites.menu.width/2,state.sprites.menu.height/2);
   state.sprites.menu.x = state.canvas.width/2;
   state.sprites.menu.y = state.canvas.height/2;
-  state.stage.addChild(state.sprites.menu);
 
   //backdrop
   state.sprites.backdrop = new PIXI.Sprite(
@@ -22,6 +22,9 @@ export default function setup(state){
   );
   state.sprites.backdrop.x = 0;
   state.sprites.backdrop.y = 0;
+
+  //end game screen
+  state.sprites.endScreen = new PIXI.Sprite(PIXI.loader.resources[EndScreen].texture);
 
   //Cloud
   state.sprites.cloud = new PIXI.Sprite(

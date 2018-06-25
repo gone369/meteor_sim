@@ -5,17 +5,19 @@ import gameConfig from "../game.config.js";
 
 export function addMeteorSprite(state){
   const meteor = new PIXI.extras.AnimatedSprite(state.texture.meteor);
-  meteor.x = state.canvas.width/2-gameConfig.meteor.width/2;
+  meteor.x = state.canvas.width/2-gameConfig.meteor.width*gameConfig.meteor.scale/2;
   meteor.y = 0;
   console.log(meteor.x,meteor.y);
   meteor.animationSpeed = 0.3;
+  meteor.scale.set(gameConfig.meteor.scale);
   meteor.play();
 
   state.sprites.meteor = meteor;
   state.stage.addChild(meteor);
 }
 
-export function removeMeteorSprite(){
+export function removeMeteorSprite(state){
+  state.stage.removeChild(state.sprites.meteor);
 }
 
 export default {
@@ -24,10 +26,10 @@ export default {
     addMeteorSprite(state);
   },
   moveMeteor(state,deltaX,deltaY){
-    const minX = state.sprites.meteor.width;
-    const maxX = state.canvas.width-state.sprites.meteor.width;
-    const minY = 0
-    const maxY = state.canvas.height-state.sprites.meteor.height-50;
+    const minX = 0-gameConfig.meteor.width*gameConfig.meteor.scale/2;
+    const maxX = state.canvas.width-gameConfig.meteor.width*gameConfig.meteor.scale/2;
+    const minY = 0-gameConfig.meteor.height*gameConfig.meteor.scale/2
+    const maxY = state.canvas.height-gameConfig.meteor.height*gameConfig.meteor.scale-50;
 
     const finalX = state.sprites.meteor.x + deltaX;
     const finalY = state.sprites.meteor.y + deltaY;
@@ -41,7 +43,7 @@ export default {
 
   },
   destroy(state){
-    // removeMeteorSprite();
+    removeMeteorSprite(state);
   }
 }
 

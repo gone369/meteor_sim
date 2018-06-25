@@ -5,6 +5,7 @@ import Backdrop from "./assets/MeteorSim/backdrop.png";
 import Rockets from "./assets/MeteorSim/rocket.png";
 import Meteor from "./assets/MeteorSim/meteor.png";
 import Cloud from "./assets/MeteorSim/cloud.png";
+import EndScreen from "./assets/MeteorSim/end.png";
 import { PixiSpriteUtil } from "pixiUtils";
 
 import initialize from "./lifecycle/initialize.js";
@@ -37,7 +38,8 @@ import sound from "./components/sound.js"
     Backdrop,
     Rockets,
     Meteor,
-    Cloud
+    Cloud,
+    EndScreen
   ]).on("progress",loadProgressHandler)
   .load(()=>{
     sound(state);

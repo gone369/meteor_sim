@@ -39,7 +39,7 @@ export default function initialize(state){
 
   //Add the canvas to the HTML document
   const $controls = document.getElementById("controls");
-  document.getElementById("viewport").insertBefore(state.canvas.element,$controls);
+  document.getElementById("canvas-container").insertBefore(state.canvas.element,$controls);
   //Create a container object called the `stage`
   state.stage = new PIXI.Container();
 }

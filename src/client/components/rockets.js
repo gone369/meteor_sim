@@ -9,33 +9,42 @@ export function addRocketSprite(state){
   state.gameState.numRockets++;
   const rocket = new PIXI.extras.AnimatedSprite(state.texture.rockets);
 
-  rocket.x = Math.random()*state.canvas.width+gameConfig.rocket.width/2;
-  rocket.y = state.canvas.height+gameConfig.rocket.height;
-  rocket.scale.set(0.7);
+  rocket.x = Math.random()*state.canvas.width+gameConfig.rocket.width*gameConfig.rocket.scale/2;
+  rocket.y = state.canvas.height+gameConfig.rocket.height*gameConfig.rocket.scale;
+  rocket.speed = Math.random()*0.5;// 0.5 - 4
+  rocket.scale.set(gameConfig.rocket.scale);
   rocket.animationSpeed = 0.3;
   rocket.play();
 
   state.sprites.rockets.push(rocket);
   state.stage.addChild(rocket);
-  return shortid.generate();
+  return rocket;
 }
 
-export function removeRocketSprite(rocketSprite){
-}
-
-export function animateRocketFrame(sprites,texture){
-  for(let sprite of sprites.rockets){
-    sprite.frame = (sprite.frame+1)%10;
-    sprite.sprite = new PIXI.Sprite(texture.rockets[sprite.frame]);
+export function removeOutOfScreenRockets(state){
+  for(let index in state.sprites.rockets){
+    const rocket = state.sprites.rockets[index];
+    if(rocket.y < -1*gameConfig.rocket.height*gameConfig.rocket.scale){
+      state.stage.removeChild(rocket);
+      state.sprites.rockets.splice(index,1);
+    }
   }
 }
 
 export function moveRockets(rockets){
   for(let rocket of rockets){
     // rocket.x += Math.round(Math.random()) === 1? 2 : -2;
-    rocket.x += 0;
-    rocket.y -= 1;
+    // rocket.x += 0
+    rocket.y -= 1*rocket.speed;
   }
+}
+
+export function removeRockets(state){
+  for(let index in state.sprites.rockets){
+    const rocket = state.sprites.rockets[index];
+    state.stage.removeChild(rocket);
+  }
+  state.sprites.rockets = [];
 }
 
 export default {
@@ -45,16 +54,17 @@ export default {
   run(state){
     // console.log(state.rockets.addRocketTimerTick);
     if(--state.rockets.addRocketTimerTick < 0){
-      addRocketSprite(state)
+      addRocketSprite(state);
       state.rockets.addRocketTimerTick = 100;
     }
     moveRockets(state.sprites.rockets);
+    removeOutOfScreenRockets(state);
   },
-  destroy(){
+  stop(state){
+    moveRockets(state.sprites.rockets);
+    removeOutOfScreenRockets(state);
+  },
+  destroy(state){
+    removeRockets(state);
   }
 }
-
-//animateRocketFrame(state.sprites,texture);
-// if(state.gameState.numRockets < 1){
-//   addRocketSprite(state);
-// }
