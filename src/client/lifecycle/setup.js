@@ -15,6 +15,7 @@ export default function setup(state){
   state.sprites.menu.pivot.set(state.sprites.menu.width/2,state.sprites.menu.height/2);
   state.sprites.menu.x = state.canvas.width/2;
   state.sprites.menu.y = state.canvas.height/2;
+  state.sprites.menu.scale.set(state.canvas.scale);
 
   //backdrop
   state.sprites.backdrop = new PIXI.Sprite(
@@ -22,9 +23,11 @@ export default function setup(state){
   );
   state.sprites.backdrop.x = 0;
   state.sprites.backdrop.y = 0;
+  state.sprites.backdrop.scale.set(state.canvas.scale);
 
   //end game screen
   state.sprites.endScreen = new PIXI.Sprite(PIXI.loader.resources[EndScreen].texture);
+  state.sprites.endScreen.scale.set(state.canvas.scale);
 
   //Cloud
   state.sprites.cloud = new PIXI.Sprite(
@@ -35,6 +38,7 @@ export default function setup(state){
   state.sprites.cloud.anchor.x = 0.5;
   state.sprites.cloud.anchor.y = 0.5;
   state.sprites.cloud.zOrder = 997;
+  state.sprites.cloud.scale.set(state.canvas.scale);
 
   //Rockets
   state.sprites.rockets = [];

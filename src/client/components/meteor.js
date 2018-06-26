@@ -4,12 +4,14 @@ import Meteor from "../assets/MeteorSim/meteor.png";
 import gameConfig from "../game.config.js";
 
 export function addMeteorSprite(state){
+
+  const meteorScale = gameConfig.meteor.scale * state.canvas.scale;
+
   const meteor = new PIXI.extras.AnimatedSprite(state.texture.meteor);
-  meteor.x = state.canvas.width/2-gameConfig.meteor.width*gameConfig.meteor.scale/2;
+  meteor.x = state.canvas.width/2-gameConfig.meteor.width*meteorScale/2;
   meteor.y = 0;
-  console.log(meteor.x,meteor.y);
   meteor.animationSpeed = 0.3;
-  meteor.scale.set(gameConfig.meteor.scale);
+  meteor.scale.set(meteorScale);
   meteor.play();
 
   state.sprites.meteor = meteor;
@@ -26,10 +28,11 @@ export default {
     addMeteorSprite(state);
   },
   moveMeteor(state,deltaX,deltaY){
-    const minX = 0-gameConfig.meteor.width*gameConfig.meteor.scale/2;
-    const maxX = state.canvas.width-gameConfig.meteor.width*gameConfig.meteor.scale/2;
-    const minY = 0-gameConfig.meteor.height*gameConfig.meteor.scale/2
-    const maxY = state.canvas.height-gameConfig.meteor.height*gameConfig.meteor.scale-50;
+    const meteorScale = gameConfig.meteor.scale * state.canvas.scale;
+    const minX = 0-gameConfig.meteor.width*meteorScale/2;
+    const maxX = state.canvas.width-gameConfig.meteor.width*meteorScale/2;
+    const minY = 0-gameConfig.meteor.height*meteorScale/2
+    const maxY = state.canvas.height-gameConfig.meteor.height*meteorScale-50;
 
     const finalX = state.sprites.meteor.x + deltaX;
     const finalY = state.sprites.meteor.y + deltaY;
@@ -41,6 +44,8 @@ export default {
       state.sprites.meteor.y += deltaY;
     }
 
+  },
+  stop(){
   },
   destroy(state){
     removeMeteorSprite(state);

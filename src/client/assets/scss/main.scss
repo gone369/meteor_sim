@@ -1,28 +1,45 @@
 @import "colors";
 @import "variables";
-@import "base";
+
+%center{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+
+%fill{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
 
 #root{
   position: relative;
   height: 100%;
   width: 100%;
   #viewport{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
+    @extend %center;
     #canvas-container{
       position: relative;
       margin: 0px;
       padding: 0px;
+      #loading-percentage{
+        color: white;
+        font-size: 48px;
+        @extend %center;
+      }
       .whitescreen{
         background: white;
         opacity: 0;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
+        @extend %fill;
+      }
+      .redscreen{
+        background: red;
+        opacity: 0;
+        @extend %fill;
       }
       #root-canvas{
         border: 0px !important;
@@ -40,5 +57,4 @@
       }
     }
   }
-  min-width: 600px;
 }

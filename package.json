@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dist": "webpack --mode production --config config/webpack.dist.config.js",
-    "start": "webpack-dev-server --mode development --open --port 1337 --hot --config config/webpack.config.js"
+    "dist": "NODE_ENV=production webpack --mode production --config config/webpack.dist.config.js && echo meteor-sim.surge.sh > ./build/CNAME",
+    "start": "NODE_ENV=development webpack-dev-server --mode development --open --port 1337 --hot --config config/webpack.config.js"
   },
   "author": "Xun Chen <xunchen369@gmail.com> (http://gone369.github.io)",
   "license": "ISC",
@@ -22,12 +22,15 @@
     "eslint": "^4.19.1",
     "express": "^4.16.3",
     "file-loader": "^1.1.11",
+    "html-webpack-inline-source-plugin": "^0.0.10",
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.4.0",
     "node-sass": "^4.9.0",
+    "optimize-css-assets-webpack-plugin": "^4.0.3",
     "raw-loader": "^0.5.1",
     "sass-loader": "^7.0.3",
     "style-loader": "^0.21.0",
+    "uglifyjs-webpack-plugin": "^1.2.7",
     "url-loader": "^1.0.1",
     "webpack": "^4.12.0",
     "webpack-cli": "^3.0.4",

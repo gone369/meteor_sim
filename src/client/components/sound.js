@@ -1,7 +1,6 @@
 import bgm from "../assets/MeteorSim/bgm.mp3";
 
-export default function(state){
-  //TODO load sound here
+export default function(state,cb){
   const $audio = document.createElement("audio");
   $audio.id = "bgm";
   $audio.src=bgm;
@@ -22,8 +21,15 @@ export default function(state){
     }
   });
 
+  const $loadingMessage= document.getElementById("loading-message");
+  const $loadingPercentage = document.getElementById("loading-percentage");
+  $loadingMessage.innerHTML = "Loading Sound...";
+  $loadingPercentage.innerHTML = "";
 
-  console.log(bgm);
+  // console.log(bgm);
   // const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
+  $audio.onloadeddata = function(event){
+    $loadingMessage.innerHTML = "Done.";
+    cb(null,event);
+  }
 }

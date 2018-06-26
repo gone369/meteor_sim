@@ -5,6 +5,8 @@ const webpack = require("webpack");
 const devMode = process.env.NODE_ENV !== "production";
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
+const HtmlWebpackInlineSourcePlugin = require("html-webpack-inline-source-plugin");
+
 module.exports = {
   entry: {
     index: path.resolve(__dirname, config.entry)
@@ -94,9 +96,11 @@ module.exports = {
     new HTMLWebpackPlugin({
       title: config.name,
       template: config.client.html_index_template_path,
+      // inlineSource: ".(js|css)$",
       //favicon: config.client.favicon,
       inject: "body"
     }),
+    new HtmlWebpackInlineSourcePlugin(),
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional

@@ -27,10 +27,16 @@ import sound from "./components/sound.js"
     gameState: {}
   };
   initialize(state);
+  const $loadingMessage= document.getElementById("loading-message");
+  const $loadingPercentage = document.getElementById("loading-percentage");
 
   //load
   const loadProgressHandler = (loader,resource)=>{
-    console.log("load",resource,loader);
+    // console.log("load",resource,loader);
+    // console.log(loader.progress);
+    $loadingMessage.innerHTML = "Loading Resources...";
+    const percentage = +(loader.progress).toFixed(2);
+    $loadingPercentage.innerHTML = percentage+"%";
   };
 
   PIXI.loader.add([
@@ -42,8 +48,14 @@ import sound from "./components/sound.js"
     EndScreen
   ]).on("progress",loadProgressHandler)
   .load(()=>{
-    sound(state);
-    setup(state);
-    run(state);
+    sound(state,(err)=>{
+      if(err){
+        throw new Error("sound load fail");
+      }
+      $loadingPercentage.innerHTML = "100%";
+      $loadingPercentage.className = "hide";
+      setup(state);
+      run(state);
+    });
   });
 })();

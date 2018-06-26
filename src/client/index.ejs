@@ -4,17 +4,46 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width"/>
     <title><%= htmlWebpackPlugin.options.title %></title>
-  </head>
-  <body>
-    <div id="root">
-      <div id="viewport">
-        <div id="canvas-container">
-          <div class="whitescreen"/>
+    <style>
+      .center{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+      }
+      html{
+        font-family: Open Sans,Helvetica,sans-serif;
+      }
+      body{
+        margin: 0;
+        padding: 0;
+        background-color: black;
+        height: 100vh;
+        width: 100vw;
+      }
+      #loading-container{
+        font-size: 48px;
+        color: white;
+      }
+      </style>
+    </head>
+    <body>
+      <div id="root">
+        <div id="loading-container" class="center">
+          <span id="loading-message">
+            Loading Page...
+          </span>
+          <span id="loading-percentage"></span>
         </div>
-        <div id="controls">
-          <span id="sound-state"> Mute </span>
+        <div id="viewport">
+          <div id="canvas-container">
+            <div class="whitescreen"></div>
+            <div class="redscreen"></div>
+          </div>
+          <div id="controls">
+            <span id="sound-state"> Mute </span>
+          </div>
         </div>
       </div>
-    </div>
-  </body>
-</html>
+    </body>
+    </html>

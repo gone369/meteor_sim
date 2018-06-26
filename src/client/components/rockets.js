@@ -3,16 +3,17 @@ import Rockets from "../assets/MeteorSim/rocket.png";
 import gameConfig from "../game.config.js";
 import shortid from "shortid";
 
+
 export function addRocketSprite(state){
-  console.log("add RocketSprite");
+  const rocketScale = gameConfig.rocket.scale * state.canvas.scale;
 
   state.gameState.numRockets++;
   const rocket = new PIXI.extras.AnimatedSprite(state.texture.rockets);
 
-  rocket.x = Math.random()*state.canvas.width+gameConfig.rocket.width*gameConfig.rocket.scale/2;
-  rocket.y = state.canvas.height+gameConfig.rocket.height*gameConfig.rocket.scale;
-  rocket.speed = Math.random()*0.5;// 0.5 - 4
-  rocket.scale.set(gameConfig.rocket.scale);
+  rocket.x = Math.random()*state.canvas.width+gameConfig.rocket.width*rocketScale/2;
+  rocket.y = state.canvas.height+gameConfig.rocket.height*rocketScale;
+  rocket.speed = Math.random()*3.5+0.5;// 0.5 - 4
+  rocket.scale.set(rocketScale);
   rocket.animationSpeed = 0.3;
   rocket.play();
 
@@ -22,9 +23,10 @@ export function addRocketSprite(state){
 }
 
 export function removeOutOfScreenRockets(state){
+  const rocketScale = gameConfig.rocket.scale * state.canvas.scale;
   for(let index in state.sprites.rockets){
     const rocket = state.sprites.rockets[index];
-    if(rocket.y < -1*gameConfig.rocket.height*gameConfig.rocket.scale){
+    if(rocket.y < -1*gameConfig.rocket.height*rocketScale){
       state.stage.removeChild(rocket);
       state.sprites.rockets.splice(index,1);
     }
