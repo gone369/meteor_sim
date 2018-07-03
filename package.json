@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dist": "NODE_ENV=production webpack --mode production --config config/webpack.dist.config.js && echo meteor-sim.surge.sh > ./build/CNAME",
-    "start": "NODE_ENV=development webpack-dev-server --mode development --open --port 1337 --hot --config config/webpack.config.js"
+    "dev": "NODE_ENV=development webpack-dev-server --mode development --open --port 1337 --hot --config config/webpack.config.js",
+    "start": "NODE_ENV=production node client.server.js"
   },
   "author": "Xun Chen <xunchen369@gmail.com> (http://gone369.github.io)",
   "license": "ISC",

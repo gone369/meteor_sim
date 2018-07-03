@@ -9,7 +9,7 @@ module.exports = Object.assign({},base,{
     ...base.optimization,
     minimizer: [
       new UglifyJsPlugin({
-        cache: true,
+        cache: false,
         parallel: true,
         sourceMap: true // set to true if you want JS source maps
       }),
